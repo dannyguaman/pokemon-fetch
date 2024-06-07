@@ -1,37 +1,19 @@
 
 import './App.css';
-import {useState, useEffect} from "react"
+import ListaUsuarios from './Components/ListaUsuarios';
+import AgregarUsuario from './Components/AgregarUsuario';
+import DetalleUsuario from './Components/DetalleUsuario';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
-
-  const [pokeList, setPokeList] = useState([]);
-
-  const clickHandler = (e) => {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
-      .then(response => {
-      return response.json();
-      }).then(response => {
-          console.log(response.results);
-          setPokeList(response.results);
-      }).catch(err=>{
-          console.log(err);
-      })
-
-  };
-
   return (
-    <div>
-      <button onClick={clickHandler}>Fetch Pokemon</button>
-      <ul className="App">
-      {
-        pokeList.map((item, idx) =>{
-          return <li key={idx}>
-            {(item.name)}</li>
-        })
-      }
-      
-      </ul>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={"/usuario/new"} element= {<AgregarUsuario />} />
+        <Route path={"/usuario/:id"} element= {<DetalleUsuario />} />
+        <Route path={"/"} element= {<ListaUsuarios />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
